@@ -12,4 +12,16 @@ async function dbConnect(): Promise<void> {
     console.log("already connected to database");
     return;
   }
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URI || "", {});
+    connection.isConnect = db.connections[0].readyState;
+
+    //  db connection successfully
+    console.log("db connection successfully");
+  } catch (error) {
+    console.log("data base connection failed", error);
+    process.exit();
+  }
 }
+
+export default dbConnect;
